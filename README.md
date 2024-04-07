@@ -17,6 +17,12 @@ Table For Calls
 ## Design APIs using OpenAPI specification 3.1.0 
 SwaggerHub: https://app.swaggerhub.com/apis/KARAKRAAFIFA123/swagger-inventory_management_systemopen_api_3_1/1.0.0 
 
+## description of each resource
+1- Customer : how make a call with employee for some reason so the attributes is (id,name,Phone Number)
+2- Employee : can Stores,classified and manage call after it end so the attributes is (id,name,Phone Number)
+3- Calls : Every call made between a customer and an employee is stored with actual time  so the attributes is (id,Time,audio text) 
+4-supervisor:  For each employee or more, there is a supervisor who supervises and follows up on him so the attributes is (id,name,Phone Number)
+
 
 
 
