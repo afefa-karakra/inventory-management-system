@@ -1,0 +1,1 @@
+INSERT INTO Employee (Name , phone_number) values ('Hanan','0592653332')
