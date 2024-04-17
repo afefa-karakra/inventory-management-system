@@ -1,6 +1,7 @@
 package com.example.convoconvert.Controller;
 
 
+import com.example.convoconvert.DTO.CustomerDTO;
 import com.example.convoconvert.DTO.EmployeeDTO;
 import com.example.convoconvert.Exception.BadRequestException;
 import com.example.convoconvert.Service.EmployeeService;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.springframework.web.service.annotation.PutExchange;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import static org.springframework.data.jpa.domain.AbstractPersistable_.ID;
 import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
@@ -69,6 +72,14 @@ public class EmployeeController {
 
       //  return new ResponseEntity<>(employeeServiceInterface.updateEmployee(employeeDTO, name), HttpStatus.OK);
     }*/
+
+    @PatchMapping ("/{id}")
+    public ResponseEntity<EmployeeDTO> updateFieldsOfEmployee
+            (@Valid @RequestBody Map<String , Optional> map
+                    , @PathVariable(name = "id") long id) {
+
+        return new ResponseEntity<>(employeeServiceInterface.updateFieldsOfEmployee(id , map), HttpStatus.OK);
+    }
 
 
     @DeleteMapping("/{id}")

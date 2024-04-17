@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +54,30 @@ public class SupervisorService implements SupervisorServiceInterface {
         Supervisor updateSupervisor = supervisorInterfaceRepository.save(supervisor);
         return mapToDTO(updateSupervisor);
     }
+
+    @Override
+    public SupervisorDTO updateFieldsOfSupervisor(long id, Map<String, Optional> map) {
+        Supervisor supervisor = supervisorInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Supervisor", "id", id));
+
+
+        for (Map.Entry<String , Optional> hm : map.entrySet()){
+            String keyFromMap = hm.getKey();
+
+            if(keyFromMap.equals("name")){
+                String obj = hm.getValue().toString();
+
+                supervisor.setName(obj);
+            }
+            if(keyFromMap.equals("PhoneNumber")){
+                Integer obj = Integer.valueOf(String.valueOf(hm.getValue()));
+
+                supervisor.setPhoneNumber(obj);
+            }
+        }
+        Supervisor updateSupervisor = supervisorInterfaceRepository.save(supervisor);
+        return mapToDTO(updateSupervisor);
+    }
+
     @Override
     public void deleteSupervisorById(long id) {
         Supervisor supervisor = supervisorInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Supervisor", "id", id));

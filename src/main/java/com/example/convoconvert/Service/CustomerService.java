@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -53,6 +55,30 @@ public class CustomerService implements CustomerServiceInterface {
         customer.setName(customerDTO.getName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
 
+        Customer updateCustomer = customerInterfaceRepository.save(customer);
+        return mapToDTO(updateCustomer);
+    }
+
+    @Override
+    public CustomerDTO updateFieldsOfCustomer(long id, Map<String, Optional> map) {
+        Customer customer = customerInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
+
+
+        for (Map.Entry<String , Optional> hm : map.entrySet()){
+            String keyFromMap = hm.getKey();
+
+            if(keyFromMap.equals("name")){
+                String obj = hm.getValue().toString();
+
+                customer.setName(obj);
+            }
+
+            if(keyFromMap.equals("PhoneNumber")){
+                Integer obj = Integer.valueOf(String.valueOf(hm.getValue()));
+
+                customer.setPhoneNumber(obj);
+            }
+        }
         Customer updateCustomer = customerInterfaceRepository.save(customer);
         return mapToDTO(updateCustomer);
     }

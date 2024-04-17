@@ -15,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Supervisor")
@@ -52,6 +54,14 @@ public class SupervisorController {
                     , @PathVariable(name = "id") long id) {
 
         return new ResponseEntity<>(supervisorServiceInterface.updateSupervisor(supervisorDTO, id), HttpStatus.OK);
+    }
+
+    @PatchMapping ("/{id}")
+    public ResponseEntity<SupervisorDTO> updateFieldsOfSupervisor
+            (@Valid @RequestBody Map<String , Optional> map
+                    , @PathVariable(name = "id") long id) {
+
+        return new ResponseEntity<>(supervisorServiceInterface.updateFieldsOfSupervisor(id , map), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
