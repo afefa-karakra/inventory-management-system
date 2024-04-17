@@ -24,7 +24,7 @@ public class Customer implements Serializable {
     private String name;
 
     @Column(name = "PhoneNumber", nullable = false)
-    private int PhoneNumber;
+    private long PhoneNumber;
 
 
 }

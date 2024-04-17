@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class CustomerDTO {
 
     private long id;
-    private int PhoneNumber;
+    private long PhoneNumber;
     private String Name;
 }

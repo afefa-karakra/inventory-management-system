@@ -1,5 +1,6 @@
 package com.example.convoconvert.Controller;
 
+import com.example.convoconvert.DTO.CallsDTO;
 import com.example.convoconvert.DTO.CustomerDTO;
 import com.example.convoconvert.DTO.EmployeeDTO;
 import com.example.convoconvert.Exception.BadRequestException;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Customer")
@@ -53,6 +56,14 @@ public class CustomerController {
                     , @PathVariable(name = "id") long id) {
 
         return new ResponseEntity<>(customerServiceInterface.updateCustomer(customerDTO, id), HttpStatus.OK);
+    }
+
+    @PatchMapping ("/{id}")
+    public ResponseEntity<CustomerDTO> updateFieldsOfCustomer
+            (@Valid @RequestBody Map<String , Optional> map
+                    , @PathVariable(name = "id") long id) {
+
+        return new ResponseEntity<>(customerServiceInterface.updateFieldsOfCustomer(id , map), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

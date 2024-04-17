@@ -7,7 +7,11 @@ import com.example.convoconvert.Repository.CallsInterfaceRepository;
 import com.example.convoconvert.Service.Interface.CallsServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -48,6 +52,27 @@ public class CallsService implements CallsServiceInterface {
 
         calls.setAudioText(callsDTO.getAudioText());
         calls.setDate(callsDTO.getDate());
+
+        Calls updateCalls = callsInterfaceRepository.save(calls);
+        return mapToDTO(updateCalls);
+    }
+
+    @Override
+    public CallsDTO updateFieldsOfCall(long id, Map<String, Optional> map) {
+
+        Calls calls = callsInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Calls", "id", id));
+
+        for (Map.Entry<String , Optional> hm : map.entrySet()){
+            String keyFromMap = hm.getKey();
+
+            if(keyFromMap.equals("audioText")){
+                String obj = hm.getValue().toString();
+
+                calls.setAudioText(obj);
+
+            }
+
+        }
 
         Calls updateCalls = callsInterfaceRepository.save(calls);
         return mapToDTO(updateCalls);
