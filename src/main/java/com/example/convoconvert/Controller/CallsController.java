@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Calls")
@@ -51,6 +53,14 @@ public class CallsController {
                     , @PathVariable(name = "id") long id) {
 
         return new ResponseEntity<>(callsServiceInterface.updateCall(callsDTO, id), HttpStatus.OK);
+    }
+
+    @PatchMapping ("/{id}")
+    public ResponseEntity<CallsDTO> updateFieldsOfCallls
+            (@Valid @RequestBody Map<String , Optional> map
+                    , @PathVariable(name = "id") long id) {
+
+        return new ResponseEntity<>(callsServiceInterface.updateFieldsOfCall(id , map), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")

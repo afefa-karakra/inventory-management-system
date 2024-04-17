@@ -1,6 +1,7 @@
 package com.example.convoconvert.Service;
 
 import com.example.convoconvert.DTO.EmployeeDTO;
+import com.example.convoconvert.Entity.Customer;
 import com.example.convoconvert.Entity.Employee;
 import com.example.convoconvert.Exception.ResourceNotFoundException;
 import com.example.convoconvert.Repository.EmployeeInterfaceRepository;
@@ -8,6 +9,8 @@ import com.example.convoconvert.Service.Interface.EmployeeServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -48,6 +51,29 @@ public class EmployeeService implements EmployeeServiceInterface {
         employee.setName(employeeDTO.getName());
         employee.setPhoneNumber(employeeDTO.getPhoneNumber());
 
+        Employee updateEmployee = employeeInterfaceRepository.save(employee);
+        return mapToDTO(updateEmployee);
+    }
+
+    @Override
+    public EmployeeDTO updateFieldsOfEmployee(long id, Map<String, Optional> map) {
+        Employee employee = employeeInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
+
+
+        for (Map.Entry<String , Optional> hm : map.entrySet()){
+            String keyFromMap = hm.getKey();
+
+            if(keyFromMap.equals("name")){
+                String obj = hm.getValue().toString();
+
+                employee.setName(obj);
+            }
+            if(keyFromMap.equals("PhoneNumber")){
+                Integer obj = Integer.valueOf(String.valueOf(hm.getValue()));
+
+                employee.setPhoneNumber(obj);
+            }
+        }
         Employee updateEmployee = employeeInterfaceRepository.save(employee);
         return mapToDTO(updateEmployee);
     }
