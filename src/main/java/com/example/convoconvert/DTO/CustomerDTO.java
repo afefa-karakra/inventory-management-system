@@ -12,4 +12,5 @@ public class CustomerDTO {
     private long id;
     private int PhoneNumber;
     private String Name;
+
 }
