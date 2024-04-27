@@ -50,7 +50,7 @@ public class CustomerService implements CustomerServiceInterface {
     public CustomerDTO updateCustomer(CustomerDTO customerDTO, long id) {
         Customer customer = customerInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Customer", "id", id));
 
-        customer.setName(customerDTO.getName());
+        customer.setFullName(customerDTO.getFullName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
 
         Customer updateCustomer = customerInterfaceRepository.save(customer);
@@ -66,7 +66,7 @@ public class CustomerService implements CustomerServiceInterface {
 
     private Customer mapToEntity (CustomerDTO customerDTO){
         Customer customer = new Customer();
-        customer.setName(customerDTO.getName());
+        customer.setFullName(customerDTO.getFullName());
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
         return  customer;
 
@@ -75,7 +75,7 @@ public class CustomerService implements CustomerServiceInterface {
     private CustomerDTO mapToDTO(Customer customer){
         CustomerDTO customerDTO = new CustomerDTO();
         customerDTO.setId(customer.getId());
-        customerDTO.setName(customer.getName());
+        customerDTO.setFullName(customer.getFullName());
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
 
         return  customerDTO;

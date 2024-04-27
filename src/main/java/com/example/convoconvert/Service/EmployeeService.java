@@ -45,7 +45,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     public EmployeeDTO updateEmployee(EmployeeDTO employeeDTO, long id) {
         Employee employee = employeeInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Employee", "id", id));
 
-        employee.setName(employeeDTO.getName());
+        employee.setFullName(employeeDTO.getFullName());
         employee.setPhoneNumber(employeeDTO.getPhoneNumber());
 
         Employee updateEmployee = employeeInterfaceRepository.save(employee);
@@ -63,7 +63,7 @@ public class EmployeeService implements EmployeeServiceInterface {
 
     private Employee mapToEntity (EmployeeDTO employeeDTO){
         Employee employee = new Employee();
-        employee.setName(employeeDTO.getName());
+        employee.setFullName(employeeDTO.getFullName());
         employee.setPhoneNumber(employeeDTO.getPhoneNumber());
 
         return  employee;
@@ -73,7 +73,7 @@ public class EmployeeService implements EmployeeServiceInterface {
     private EmployeeDTO mapToDTO(Employee employee){
         EmployeeDTO employeeDTO = new EmployeeDTO();
         employeeDTO.setId(employee.getId());
-        employeeDTO.setName(employee.getName());
+        employeeDTO.setFullName(employee.getFullName());
         employeeDTO.setPhoneNumber(employee.getPhoneNumber());
 
         return  employeeDTO;

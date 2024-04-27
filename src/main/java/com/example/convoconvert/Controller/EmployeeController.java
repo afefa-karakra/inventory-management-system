@@ -43,7 +43,7 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeDTO> createEmployee (@Valid @RequestBody EmployeeDTO employeeDTO) {
 
-        if (employeeDTO.getName() ==null) {
+        if (employeeDTO.getFullName() ==null) {
             log.error("Cannot have an name {}", employeeDTO);
             throw new BadRequestException(EmployeeController.class.getSimpleName(),
                     "Name");

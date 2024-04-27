@@ -7,6 +7,8 @@ import com.example.convoconvert.Repository.CallsInterfaceRepository;
 import com.example.convoconvert.Service.Interface.CallsServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -53,13 +55,21 @@ public class CallsService implements CallsServiceInterface {
         return mapToDTO(updateCalls);
     }
 
-
     @Override
     public void deleteCallById(long id) {
 
         Calls calls = callsInterfaceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Calls", "id", id));
         callsInterfaceRepository.delete(calls);
 
+    }
+
+    @Override
+    public List<CallsDTO> getListOfCalls(long id, Date date) {
+
+        List<Calls> callsList = callsInterfaceRepository.findByDate(id, date);
+
+        return callsList.stream().map(calls -> mapToDTO(calls))
+                .collect(Collectors.toList());
     }
 
     private CallsDTO mapToDTO(Calls calls) {

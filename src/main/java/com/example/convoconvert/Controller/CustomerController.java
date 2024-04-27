@@ -37,7 +37,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<CustomerDTO> createCustomer (@Valid @RequestBody CustomerDTO customerDTO) {
 
-        if (customerDTO.getName() ==null) {
+        if (customerDTO.getFullName() ==null) {
             log.error("Cannot have an name {}", customerDTO);
             throw new BadRequestException(CustomerController.class.getSimpleName(),
                     "Name");

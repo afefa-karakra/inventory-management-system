@@ -9,11 +9,14 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/Calls")
@@ -34,6 +37,15 @@ public class CallsController {
         return ResponseEntity.ok().body(callsServiceInterface.getAllCalls());
     }
 
+    @GetMapping("list")
+    public ResponseEntity<List<CallsDTO>> getListOfCalls (
+            @RequestParam(name = "id") long id,
+            @RequestParam(name = "date") @DateTimeFormat(pattern = "yy-mm-dd") Date date){
+
+        List<CallsDTO> calls = callsServiceInterface.getListOfCalls(id, date);
+        return ResponseEntity.ok().body(calls);
+    }
+
     @PostMapping
     public ResponseEntity<CallsDTO> createCalls (@Valid @RequestBody CallsDTO callsDTO) {
 
@@ -52,6 +64,15 @@ public class CallsController {
 
         return new ResponseEntity<>(callsServiceInterface.updateCall(callsDTO, id), HttpStatus.OK);
     }
+
+    /*@PatchMapping("/{id}") // Change the annotation to @PatchMapping
+    public ResponseEntity<CallsDTO> updateCallsPartially(
+            @RequestBody Map<String, Object> callsDTO,
+            @PathVariable(name = "id") long id) {
+
+        return new ResponseEntity<>(callsServiceInterface.updateCall((CallsDTO) callsDTO, id), HttpStatus.OK);
+    }*/
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCalls (@PathVariable(name = "id") long id){

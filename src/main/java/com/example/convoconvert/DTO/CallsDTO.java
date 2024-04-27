@@ -1,6 +1,8 @@
 package com.example.convoconvert.DTO;
 
-import java.util.Date;
+import java.sql.Date;
+import java.sql.Struct;
+import java.sql.Time;
 
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,14 @@ public class CallsDTO {
 
     private long id;
     private String audioText;
+    private String TextEntities;
+    private Time time;
     private Date date;
+    private boolean star;
+    private String status;
+    private String keywords;
+    private String nerTags;
+    private String entityClasses;
+    private boolean Trash;
 
 }
